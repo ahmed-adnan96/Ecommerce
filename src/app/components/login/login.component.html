@@ -1,0 +1,64 @@
+<section class="py-5">
+  <div class="container">
+    <h2>Login:</h2>
+    <form
+      class="py-5"
+      [formGroup]="loginUser"
+      (ngSubmit)="handleLogin(loginUser)"
+    >
+      <label for="email"> Email : </label>
+      <input
+        type="email"
+        formControlName="email"
+        class="form-control mt-2 mb-4"
+        id="email"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="
+          loginUser.get('email')?.touched && loginUser.get('email')?.errors
+        "
+      >
+        <p *ngIf="loginUser.get('email')?.getError('required')">
+          Email is required
+        </p>
+        <p *ngIf="loginUser.get('email')?.getError('email')">
+          Email is must be end @gmail.com for example
+        </p>
+      </div>
+      <label for="password"> Password: </label>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control mt-2 mb-4"
+        id="password"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="
+          loginUser.get('password')?.touched &&
+          loginUser.get('password')?.errors
+        "
+      >
+        <p *ngIf="loginUser.get('password')?.getError('required')">
+          Password is required
+        </p>
+        <p *ngIf="loginUser.get('password')?.getError('pattern')">
+          Password is must be aleat 6 charcater
+        </p>
+      </div>
+
+      <button
+        [disabled]="loginUser.invalid"
+        class="main-btn my-2"
+        type="submit"
+      >
+        Login
+        <span *ngIf="isLoad">
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i
+        ></span>
+      </button>
+      <p *ngIf="errMsg" class="alert alert-danger">{{ errMsg }}</p>
+    </form>
+  </div>
+</section>
